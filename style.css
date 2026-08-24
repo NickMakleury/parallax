@@ -1,0 +1,551 @@
+/* ════════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #06030f;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════════════════════
+   SCROLLBAR (HIDDEN)
+════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ════════════════════════════════════════════
+   NOISE OVERLAY
+════════════════════════════════════════════ */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ════════════════════════════════════════════
+   HERO WRAPPER
+   No mobile, tem altura automática (scroll natural).
+   No desktop, assume 280vh para rolagem longa (sticky).
+════════════════════════════════════════════ */
+.hero-wrapper {
+  height: auto;
+  position: relative;
+}
+
+/* ════════════════════════════════════════════
+   HERO — padrão relativo no mobile
+════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* recorta as layers que saem da viewport */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ── Gradiente de céu (z-index 0, estático) ── */
+.hero-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0e5ff 10%,
+      #d4a8ff 28%,
+      #9b5de5 52%,
+      #5c0fa8 72%,
+      #1a0133 100%);
+}
+
+/* ════════════════════════════════════════════
+   PARALLAX LAYERS CONTAINER
+════════════════════════════════════════════ */
+.parallax-layers {
+  position: absolute;
+  inset: 0;
+  /* Sem z-index para não criar stacking context, permitindo que os filhos misturem z-index globalmente */
+  overflow: visible;
+}
+
+/* ── Base de todas as layers ── */
+.layer {
+  position: absolute;
+  top: -10vh;
+  /* Margem extra no topo para permitir descer no parallax sem mostrar borda */
+  left: 0;
+  width: 100%;
+  height: 120vh;
+  /* Maior que a tela para ter folga de rolagem */
+  pointer-events: none;
+  object-fit: cover;
+  object-position: center bottom;
+  /* Ancora pela base para o alinhamento da montanha ficar perfeito */
+  display: block;
+}
+
+/* ──────────────────────────────────────────
+   POSICIONAMENTO E Z-INDEX
+────────────────────────────────────────── */
+
+.layer-4 {
+  z-index: 1;
+}
+
+.layer-3 {
+  z-index: 3;
+}
+
+/* Castelo */
+.layer-2 {
+  z-index: 4;
+}
+
+/* Névoa */
+
+/* Montanha frontal não precisa de margem extra em cima pois não desce tanto */
+.layer-1 {
+  top: auto;
+  bottom: 0;
+  height: 100vh;
+  /* Fica travada na base perfeitamente como na imagem */
+  z-index: 5;
+  /* Frente de tudo, menos o texto do hero-content superior */
+}
+
+/* ════════════════════════════════════════════
+   SEÇÃO DE CONTEÚDO (SOBRE)
+════════════════════════════════════════════ */
+.section {
+  position: relative;
+  padding: 8rem 2rem;
+  background-color: #050505;
+  text-align: center;
+  z-index: 10;
+  overflow: hidden; /* Mantém o splash cursor contido nesta seção */
+}
+
+/* O conteúdo precisa de position relativa e z-index maior que o canvas */
+.section-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Canvas do splash cursor */
+#splash-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none; /* Não bloqueia os cliques/scroll no conteúdo */
+}
+
+/* ════════════════════════════════════════════
+   HERO CONTENT (texto)
+════════════════════════════════════════════ */
+.hero-content {
+  position: absolute;
+  top: 7vh;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  padding: 0 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.hero-eyebrow {
+  position: relative;
+  z-index: 6;
+  /* Fica por cima de todas as camadas */
+  font-size: clamp(0.6rem, 1.2vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.45rem 1.4rem;
+  border-radius: 100px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-title {
+  position: relative;
+  z-index: 2;
+  /* Fica atrás do castelo (layer-3, z-index 3) */
+  font-size: clamp(4rem, 11vw, 10rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+
+  color: whitesmoke;
+  /* background: linear-gradient(
+    155deg,
+    #ffffff   0%,
+    #e0bbff  38%,
+    #c084fc  68%,
+    #a855f7 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; */
+  filter: drop-shadow(0 0 50px rgba(168, 85, 247, 0.55));
+}
+
+.hero-subtitle {
+  position: relative;
+  z-index: 6;
+  /* Fica por cima de todas as camadas */
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  font-weight: 300;
+  color: rgb(255, 255, 255);
+  max-width: 480px;
+  line-height: 1.75;
+}
+
+.hero-cta {
+  position: relative;
+  z-index: 6;
+  /* Fica por cima de todas as camadas */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2.2rem;
+  background: linear-gradient(135deg, #9b5de5, #c084fc);
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.4),
+    0 8px 32px rgba(155, 93, 229, 0.45),
+    0 0 80px rgba(155, 93, 229, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.65),
+    0 16px 48px rgba(155, 93, 229, 0.6),
+    0 0 120px rgba(155, 93, 229, 0.3);
+}
+
+.hero-cta svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.hero-cta:hover svg {
+  transform: translateY(3px);
+}
+
+/* ════════════════════════════════════════════
+   SCROLL INDICATOR
+════════════════════════════════════════════ */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.scroll-indicator span {
+  font-size: 0.62rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.scroll-mouse {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 13px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+
+.scroll-mouse-dot {
+  width: 4px;
+  height: 8px;
+  background: #c084fc;
+  border-radius: 2px;
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  60% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+/* ════════════════════════════════════════════
+   CONTENT SECTIONS
+════════════════════════════════════════════ */
+.section {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10vh 2rem;
+  background: #06030f;
+}
+
+.section-inner {
+  max-width: 860px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  text-align: center;
+}
+
+.section-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #a855f7;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.section-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, #c084fc, #e879f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ────────────────────────────────────────────
+   ROTATING WORD (componente React)
+   Anima a troca de palavra com deslize vertical
+──────────────────────────────────────────── */
+
+/* Container com clip para o deslize não vazar */
+#rotating-word-root {
+  display: inline-flex; /* inline-flex preserva a baseline nativa mesmo com overflow: hidden */
+  overflow: hidden;
+  vertical-align: baseline;
+  height: 1.1em; /* Altura exata para caber o texto sem cortar as pernas do 'p' */
+}
+
+/* O <em> gerado pelo React herda o gradiente de .section-title em */
+.rotating-word {
+  display: inline-block;
+  font-style: normal;
+  background: linear-gradient(135deg, #c084fc, #e879f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Transição padrão para os estados visible/exit */
+  transition:
+    transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity   0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Estado padrão: totalmente visível na posição original */
+.rotating-word--visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Saindo: sobe e desaparece */
+.rotating-word--exit {
+  transform: translateY(-110%);
+  opacity: 0;
+}
+
+/* Entrando: aparece embaixo sem transição (vai para visible logo depois) */
+.rotating-word--enter {
+  transform: translateY(110%);
+  opacity: 0;
+  transition: none; /* sem animação neste frame — vai animar no próximo (visible) */
+}
+
+.section-body {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.9;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(168, 85, 247, 0.32);
+  box-shadow: 0 20px 60px rgba(155, 93, 229, 0.18);
+}
+
+.card-icon {
+  font-size: 2rem;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+footer {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #06030f;
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 0.85rem;
+}
+
+/* ════════════════════════════════════════════
+   MEDIA QUERIES FOR DESKTOP (1920x1080)
+   Ajusta a proporção das imagens verticais para
+   encaixarem perfeitamente no layout horizontal (arallax.png)
+════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .hero-wrapper {
+    height: 280vh;
+    /* Scroll longo ativo no desktop */
+  }
+
+  .hero {
+    position: sticky;
+    top: 0;
+  }
+
+  .layer {
+    width: 100%;
+    height: auto;
+    /* Preserva a proporção das imagens retratos no desktop */
+    top: 0;
+    /* Alinha o topo das imagens ao topo da viewport */
+    bottom: auto;
+  }
+
+  /* Posicionamentos de ajuste fino no topo */
+  .layer-4 {
+    top: 0;
+  }
+
+  .layer-3 {
+    top: -5vh;
+    /* Sobbe levemente o castelo para alinhar melhor na composição inicial */
+  }
+
+  .layer-2 {
+    top: -2vh;
+  }
+
+  .layer-1 {
+    top: 0;
+    /* A montanha frontal começa lá embaixo por ser o final da imagem vertical */
+  }
+
+  /* Ajuste no conteúdo de texto para desktop */
+  .hero-content {
+    top: 10vh;
+    gap: 1.8rem;
+  }
+}

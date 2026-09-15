@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parallax</title>
-  <meta name="description" content="Experiência imersiva de parallax com Lenis + GSAP ScrollTrigger." />
+  <meta name="description" content="Demonstração técnica de Parallax com profundidade visual 3D, Lenis, GSAP ScrollTrigger e WebGL.">
+
+  <meta property="og:title" content="Parallax — Demonstração Técnica Interativa">
+  <meta property="og:description"
+    content="Uma demonstração técnica de Parallax, combinando profundidade visual 3D, scroll suave e efeitos interativos.">
+  <meta property="og:image" content="ara.png">
+  <meta property="og:url" content="https://parallax-kappa-weld.vercel.app/">
+  <meta property="og:type" content="website">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,37 +43,37 @@
     <section class="hero" id="hero">
 
       <!-- Céu (gradiente estático, camada 0) -->
-    <div class="hero-sky"></div>
+      <div class="hero-sky"></div>
 
-    <!-- Camadas de parallax (ordem: fundo → frente) -->
-    <div class="parallax-layers" aria-hidden="true">
-      <!-- img4 — Luz / clarão do céu  (mais distante, mais lenta) -->
-      <img class="layer layer-4" src="img4.png" alt="" data-speed="0.10" />
+      <!-- Camadas de parallax (ordem: fundo → frente) -->
+      <div class="parallax-layers" aria-hidden="true">
+        <!-- img4 — Luz / clarão do céu  (mais distante, mais lenta) -->
+        <img class="layer layer-4" src="img4.png" alt="" data-speed="0.10" />
 
-      <!-- img3 — Castelo + nuvens rosas (plano médio-fundo) -->
-      <img class="layer layer-3" src="img3.png" alt="" data-speed="0.28" />
+        <!-- img3 — Castelo + nuvens rosas (plano médio-fundo) -->
+        <img class="layer layer-3" src="img3.png" alt="" data-speed="0.28" />
 
-      <!-- img2 — Vale de névoa roxa (plano médio) -->
-      <img class="layer layer-2" src="img2.png" alt="" data-speed="0.55" />
+        <!-- img2 — Vale de névoa roxa (plano médio) -->
+        <img class="layer layer-2" src="img2.png" alt="" data-speed="0.55" />
 
-      <!-- img1 — Montanha frontal (mais próxima, mais rápida) -->
-      <img class="layer layer-1" src="img1.png" alt="" data-speed="0.90" />
+        <!-- img1 — Montanha frontal (mais próxima, mais rápida) -->
+        <img class="layer layer-1" src="img1.png" alt="" data-speed="0.90" />
 
-    </div>
+      </div>
 
-    <!-- Texto sobre o hero -->
-    <div class="hero-content" id="hero-content">
-      <span class="hero-eyebrow">Conceito & Prática</span>
-      <h1 class="hero-title">Parallax</h1>
-      <p class="hero-subtitle">
-          Uma demonstração técnica unindo profundidade visual 3D,<br/>
+      <!-- Texto sobre o hero -->
+      <div class="hero-content" id="hero-content">
+        <span class="hero-eyebrow">Conceito & Prática</span>
+        <h1 class="hero-title">Parallax</h1>
+        <p class="hero-subtitle">
+          Uma demonstração técnica unindo profundidade visual 3D,<br />
           scroll suave e simulação de física interativa.
         </p>
         <a href="#sobre" class="hero-cta" id="explore-btn">
           Explorar
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
         </a>
       </div>
@@ -93,12 +101,13 @@
       <p class="section-tag">Tecnologias Utilizadas</p>
 
       <h2 class="section-title">
-        Arte em <span id="rotating-word-root"></span>,<br/>profundidade em movimento
+        Arte em <span id="rotating-word-root"></span>,<br />profundidade em movimento
       </h2>
 
       <p class="section-body">
-        O <strong>efeito Parallax</strong> é uma técnica onde os elementos do fundo se movem mais devagar do que os da frente.
-        Isso engana o cérebro, criando uma forte ilusão de profundidade e imersão 3D num ambiente 2D. 
+        O <strong>efeito Parallax</strong> é uma técnica onde os elementos do fundo se movem mais devagar do que os da
+        frente.
+        Isso engana o cérebro, criando uma forte ilusão de profundidade e imersão 3D num ambiente 2D.
         Para atingir essa fluidez no navegador, unimos as seguintes tecnologias de ponta:
       </p>
 
@@ -107,21 +116,24 @@
           <i class="fa-solid fa-scroll card-icon"></i>
           <div class="card-title">Lenis (Smooth Scroll)</div>
           <div class="card-desc">
-            Biblioteca hiper leve para scroll virtual. Ela sobrepõe o pulo mecânico do mouse e entrega uma inércia perfeita e sedosa ao rolar a página.
+            Biblioteca hiper leve para scroll virtual. Ela sobrepõe o pulo mecânico do mouse e entrega uma inércia
+            perfeita e sedosa ao rolar a página.
           </div>
         </div>
         <div class="card">
           <i class="fa-solid fa-bolt-lightning card-icon"></i>
           <div class="card-title">GSAP ScrollTrigger</div>
           <div class="card-desc">
-            O motor da animação. Ele atrela a linha do tempo do scroll aos objetos matematicamente, calculando em tempo real a subida milimétrica de cada camada.
+            O motor da animação. Ele atrela a linha do tempo do scroll aos objetos matematicamente, calculando em tempo
+            real a subida milimétrica de cada camada.
           </div>
         </div>
         <div class="card">
           <i class="fa-solid fa-droplet card-icon"></i>
           <div class="card-title">WebGL Fluid Cursor</div>
           <div class="card-desc">
-            Algoritmo complexo de dinâmica de fluidos. Resolve equações de densidade, pressão e advecção de Navier-Stokes para desenhar a fumaça de neon interativa no seu mouse.
+            Algoritmo complexo de dinâmica de fluidos. Resolve equações de densidade, pressão e advecção de
+            Navier-Stokes para desenhar a fumaça de neon interativa no seu mouse.
           </div>
         </div>
       </div>
@@ -188,5 +200,5 @@
   </script>
 
 </body>
-</html>
 
+</html>

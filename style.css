@@ -51,7 +51,7 @@ html, body {
    No desktop, assume 280vh para rolagem longa (sticky).
 ════════════════════════════════════════════ */
 .hero-wrapper {
-  height: auto;
+  height: 280vh;
   position: relative;
 }
 
@@ -59,7 +59,7 @@ html, body {
    HERO — padrão relativo no mobile
 ════════════════════════════════════════════ */
 .hero {
-  position: relative;
+  position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
@@ -97,16 +97,14 @@ html, body {
 /* ── Base de todas as layers ── */
 .layer {
   position: absolute;
-  top: -10vh;
-  /* Margem extra no topo para permitir descer no parallax sem mostrar borda */
+  top: 0;
   left: 0;
   width: 100%;
-  height: 120vh;
-  /* Maior que a tela para ter folga de rolagem */
+  min-height: 180vh;
+  height: auto;
   pointer-events: none;
   object-fit: cover;
-  object-position: center bottom;
-  /* Ancora pela base para o alinhamento da montanha ficar perfeito */
+  object-position: top center;
   display: block;
 }
 
@@ -116,27 +114,26 @@ html, body {
 
 .layer-4 {
   z-index: 1;
+  top: 0;
 }
 
 .layer-3 {
   z-index: 3;
+  top: -5vh;
 }
 
 /* Castelo */
 .layer-2 {
   z-index: 4;
+  top: -2vh;
 }
 
 /* Névoa */
 
 /* Montanha frontal não precisa de margem extra em cima pois não desce tanto */
 .layer-1 {
-  top: auto;
-  bottom: 0;
-  height: 100vh;
-  /* Fica travada na base perfeitamente como na imagem */
   z-index: 5;
-  /* Frente de tudo, menos o texto do hero-content superior */
+  top: 0;
 }
 
 /* ════════════════════════════════════════════
@@ -175,7 +172,7 @@ html, body {
 ════════════════════════════════════════════ */
 .hero-content {
   position: absolute;
-  top: 7vh;
+  top: 10vh;
   left: 0;
   width: 100%;
 
@@ -185,7 +182,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1.8rem;
 }
 
 .hero-eyebrow {
@@ -497,55 +494,4 @@ footer {
   background: #06030f;
   color: rgba(255, 255, 255, 0.28);
   font-size: 0.85rem;
-}
-
-/* ════════════════════════════════════════════
-   MEDIA QUERIES FOR DESKTOP (1920x1080)
-   Ajusta a proporção das imagens verticais para
-   encaixarem perfeitamente no layout horizontal (arallax.png)
-════════════════════════════════════════════ */
-@media (min-width: 1024px) {
-  .hero-wrapper {
-    height: 280vh;
-    /* Scroll longo ativo no desktop */
-  }
-
-  .hero {
-    position: sticky;
-    top: 0;
-  }
-
-  .layer {
-    width: 100%;
-    height: auto;
-    /* Preserva a proporção das imagens retratos no desktop */
-    top: 0;
-    /* Alinha o topo das imagens ao topo da viewport */
-    bottom: auto;
-  }
-
-  /* Posicionamentos de ajuste fino no topo */
-  .layer-4 {
-    top: 0;
-  }
-
-  .layer-3 {
-    top: -5vh;
-    /* Sobbe levemente o castelo para alinhar melhor na composição inicial */
-  }
-
-  .layer-2 {
-    top: -2vh;
-  }
-
-  .layer-1 {
-    top: 0;
-    /* A montanha frontal começa lá embaixo por ser o final da imagem vertical */
-  }
-
-  /* Ajuste no conteúdo de texto para desktop */
-  .hero-content {
-    top: 10vh;
-    gap: 1.8rem;
-  }
 }

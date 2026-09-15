@@ -43,13 +43,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 /* ─────────────────────────────────────────────────────
    2. PARALLAX RESPONSIVO (DESKTOP VS MOBILE)
 ───────────────────────────────────────────────────── */
-const mm = gsap.matchMedia();
-
-// ── DESKTOP (1920x1080) — Scroll Longo com Sticky ──
-mm.add("(min-width: 1024px)", () => {
-  // Como as camadas iniciam alinhadas ao topo (top: 0),
-  // nós as movemos para cima (y negativo) para revelar a base (montanhas) no scroll.
-
+// ── PARALLAX GLOBAL (Desktop e Mobile unificados) ──
   // img1 (montanha frontal) -> Sobe muito e rápido, revelando o pico no final do scroll
   gsap.to('.layer-1', {
     y: () => -window.innerHeight * 0.72,
@@ -142,52 +136,6 @@ mm.add("(min-width: 1024px)", () => {
       scrub: true,
     },
   });
-});
-
-// ── MOBILE (Scroll padrão natural) ──
-mm.add("(max-width: 1023px)", () => {
-  // Restaura o comportamento que estava excelente para mobile (parallax suave sem travar tela)
-  document.querySelectorAll('.layer').forEach((layer) => {
-    const originalSpeed = parseFloat(layer.dataset.speed) || 0.5;
-    const distanceMultiplier = (1 - originalSpeed);
-
-    gsap.to(layer, {
-      y: () => window.innerHeight * 0.3 * distanceMultiplier,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    });
-  });
-
-  gsap.to('.hero-content', {
-    y: () => window.innerHeight * 0.15,
-    opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: '50% top',
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  gsap.to('.scroll-indicator', {
-    opacity: 0,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: '20% top',
-      scrub: true,
-    },
-  });
-});
 
 /* ─────────────────────────────────────────────────────
    5. FADE-IN DE ENTRADA — animação ao carregar a página

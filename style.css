@@ -495,3 +495,39 @@ footer {
   color: rgba(255, 255, 255, 0.28);
   font-size: 0.85rem;
 }
+
+/* ════════════════════════════════════════════
+   AJUSTES EXCLUSIVOS PARA CELULAR (Mobile)
+════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  /* 
+     ⬇️ AJUSTE AS IMAGENS NO CELULAR AQUI ⬇️
+     Aumente o valor de 'top' para descer mais as imagens.
+     Diminua para subi-las.
+  */
+  
+  .layer-4 { top: 12vh; }
+  
+  .layer-3 { 
+    top: 6.3vh; 
+    /* 
+       Ajuste horizontal do castelo:
+       50% é no meio. 
+       Valores menores que 50% empurram a imagem para a direita.
+       Valores maiores que 50% empurram para a esquerda.
+    */
+    object-position: 47% top; 
+  }  /* Castelo */
+  
+  .layer-2 { top: 10vh; } /* Névoa */
+  
+  .layer-1 { top: 12vh; } /* Montanha Frontal */
+  
+  /* 
+     ⬇️ AJUSTE DO TEXTO NO CELULAR ⬇️
+     Aumente o 'top' para descer o bloco de texto (título, subtítulo e botão)
+  */
+  .hero-content {
+    top: 15vh; /* Era 10vh no computador, desceu 12vh para acompanhar as imagens */
+  }
+}
